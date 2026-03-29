@@ -1,0 +1,38 @@
+# Dense LJ fluid with bad timestep (dt=0.03, 6x too large)
+# Dump every 10 steps to capture rapid degradation before crash
+
+units           lj
+atom_style      atomic
+boundary        p p p
+
+lattice         fcc 0.8442
+region          box block 0 6 0 6 0 6
+create_box      1 box
+create_atoms    1 box
+mass            1 1.0
+
+pair_style      lj/cut 2.5
+pair_coeff      1 1 1.0 1.0 2.5
+
+velocity        all create 0.75 12345 dist gaussian
+
+timestep        0.005
+
+# Equilibrate with correct timestep
+fix             1 all nvt temp 0.75 0.75 0.5
+run             5000
+unfix           1
+
+# Switch to bad timestep, dump frequently
+reset_timestep  0
+timestep        0.03
+
+fix             2 all nve
+
+dump            1 all xyz 10 trajectory_dense_bad.xyz
+dump_modify     1 sort id
+
+thermo_style    custom step temp pe ke etotal press vol
+thermo          10
+
+run             2000

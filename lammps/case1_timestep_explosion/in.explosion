@@ -1,0 +1,38 @@
+# Case 1: Exploding LJ fluid from excessive timestep
+# Expected: atoms fly apart within ~100 steps due to dt=0.05 (10x too large)
+# Correct timestep would be 0.005 in LJ units
+
+units           lj
+atom_style      atomic
+boundary        p p p
+
+# Create a simple cubic lattice, 512 atoms, density 0.5
+lattice         fcc 0.5
+region          box block 0 8 0 8 0 8
+create_box      1 box
+create_atoms    1 box
+mass            1 1.0
+
+# LJ potential with standard cutoff
+pair_style      lj/cut 2.5
+pair_coeff      1 1 1.0 1.0 2.5
+
+# Initialize velocities at T*=0.75
+velocity        all create 0.75 12345 dist gaussian
+
+# EXCESSIVE timestep: 0.05 instead of correct 0.005
+timestep        0.05
+
+# NVE integration (no thermostat)
+fix             1 all nve
+
+# Output settings - dump every 10 steps to capture the explosion
+dump            1 all xyz 10 trajectory.xyz
+dump_modify     1 sort id
+
+# Thermodynamic output every step
+thermo_style    custom step temp pe ke etotal press vol
+thermo          1
+
+# Run 200 steps - explosion should happen within ~100 steps
+run             200

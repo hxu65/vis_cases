@@ -1,0 +1,98 @@
+! -*- mode: f90 -*-
+! TGV Under-resolved DNS: Re=10000 on 65^3
+! Severely under-resolved — Kolmogorov scale eta~0.0028, dx=pi/64~0.049 (~17x gap)
+! Expect: rapid roughening, possible blow-up near peak dissipation
+
+!===================
+&BasicParam
+!===================
+
+itype = 2
+
+p_row=0
+p_col=0
+
+nx=65
+ny=65
+nz=65
+istret = 0
+beta = 0.259065151
+
+xlx = 3.14159265358979
+yly = 3.14159265358979
+zlz = 3.14159265358979
+
+nclx1 = 1
+nclxn = 1
+ncly1 = 1
+nclyn = 1
+nclz1 = 1
+nclzn = 1
+
+iin = 1
+re = 10000.
+u1 = 8.
+u2 = 8.
+init_noise  = 0.0
+inflow_noise = 0.0
+
+dt = 0.001
+ifirst = 1
+ilast = 10000
+
+ilesmod=0
+iscalar=0
+iibm=0
+
+ivisu=1
+ipost=1
+
+/End
+
+!====================
+&NumOptions
+!====================
+
+ifirstder = 4
+isecondder = 4
+
+itimescheme = 5
+
+nu0nu = 4.0
+cnu = 0.44
+
+/End
+
+!=================
+&InOutParam
+!=================
+
+irestart = 0
+icheckpoint = 10000
+ioutput = 100
+ilist = 25
+nvisu = 1
+
+/End
+
+!=================
+&Statistics
+!=================
+
+nstat = 1
+
+/End
+
+!=================
+&LESModel
+!=================
+jles=1
+smagcst=0.1
+walecst=0.5
+iconserv = 0
+/End
+
+!=================
+&CASE
+!=================
+/End

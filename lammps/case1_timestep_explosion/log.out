@@ -1,0 +1,37 @@
+LAMMPS (22 Jul 2025 - Update 3)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread.
+  using 1 OpenMP thread(s) per MPI task
+Lattice spacing in x,y,z = 2 2 2
+Created orthogonal box = (0 0 0) to (16 16 16)
+  1 by 1 by 1 MPI processor grid
+Created 2048 atoms
+  using lattice units in orthogonal box = (0 0 0) to (16 16 16)
+  create_atoms CPU = 0.001 seconds
+Generated 0 of 0 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 2.8
+  ghost atom cutoff = 2.8
+  binsize = 1.4, bins = 12 12 12
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair lj/cut, perpetual
+      attributes: half, newton on
+      pair build: half/bin/atomonly/newton
+      stencil: half/bin/3d
+      bin: standard
+Setting up Verlet run ...
+  Unit style    : lj
+  Current step  : 0
+  Time step     : 0.05
+Per MPI rank memory allocation (min/avg/max) = 3.186 | 3.186 | 3.186 Mbytes
+   Step          Temp          PotEng         KinEng         TotEng         Press          Volume    
+         0   0.75          -3.0307637      1.1244507     -1.906313      -2.2769883      4096         
+         1   0.77862103    -3.0336343      1.1673613     -1.866273      -2.2148659      4096         
+         2   0.82631436    -3.0979515      1.2388663     -1.8590852     -2.0103496      4096         
+         3   0.79287005    -2.9892063      1.1887244     -1.800482      -1.1259682      4096         
+         4   0.8792491     -2.9313736      1.3182297     -1.6131439     -0.35037523     4096         
+         5   1.7865513     -2.9064544      2.6785184     -0.22793594     0.52580118     4096         
+         6   2040528        62.113664      3059297.5      3059359.6      1019896.3      4096         
+ERROR: Lost atoms: original 2048 current 2044
+For more information see https://docs.lammps.org/err0008 (src/src/thermo.cpp:526)

@@ -1,0 +1,38 @@
+# Case 1 WRONG: Equilibrated first, then NVE with bad timestep
+# dt=0.02 (4x too large) shows clear energy drift
+
+units           lj
+atom_style      atomic
+boundary        p p p
+
+lattice         fcc 0.5
+region          box block 0 6 0 6 0 6
+create_box      1 box
+create_atoms    1 box
+mass            1 1.0
+
+pair_style      lj/cut 2.5
+pair_coeff      1 1 1.0 1.0 2.5
+
+velocity        all create 0.75 12345 dist gaussian
+
+timestep        0.005
+
+# Phase 1: Equilibrate with thermostat (same as correct case)
+fix             1 all nvt temp 1.0 1.0 0.5
+run             5000
+unfix           1
+
+# Phase 2: Switch to WRONG timestep for NVE production
+reset_timestep  0
+timestep        0.02
+
+fix             2 all nve
+
+dump            1 all xyz 50 trajectory_wrong_v2.xyz
+dump_modify     1 sort id
+
+thermo_style    custom step temp pe ke etotal press vol
+thermo          10
+
+run             5000
